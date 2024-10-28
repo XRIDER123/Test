@@ -1,0 +1,76 @@
+def capitalize(s):
+    if not s:
+        return s
+    return s[0].upper() + s[1:]
+
+def reverseString(s):
+    return s[::-1]
+
+class Calculator:
+    def add(self, a, b):
+        return a + b
+    
+    def subtract(self, a, b):
+        return a - b
+    
+    def multiply(self, a, b):
+        return a * b
+    
+    def divide(self, a, b):
+        if b == 0:
+            raise ValueError("Cannot divide by zero.")
+        return a / b
+
+def caesarCipher(text, shift):
+    def shift_char(c, shift):
+        if c.islower():
+            return chr((ord(c) - ord('a') + shift) % 26 + ord('a'))
+        elif c.isupper():
+            return chr((ord(c) - ord('A') + shift) % 26 + ord('A'))
+        return c
+
+    return ''.join(shift_char(c, shift) for c in text)
+
+def analyzeArray(arr):
+    return {
+        'average': sum(arr) / len(arr) if arr else 0,
+        'min': min(arr) if arr else None,
+        'max': max(arr) if arr else None,
+        'length': len(arr)
+    }
+def run_tests():
+    # Test capitalize
+    assert capitalize("hello") == "Hello"
+    assert capitalize("world") == "World"
+    assert capitalize("") == ""
+    
+    # Test reverseString
+    assert reverseString("hello") == "olleh"
+    assert reverseString("world") == "dlrow"
+    assert reverseString("") == ""
+    
+    # Test Calculator
+    calc = Calculator()
+    assert calc.add(2, 3) == 5
+    assert calc.subtract(5, 3) == 2
+    assert calc.multiply(2, 3) == 6
+    assert calc.divide(6, 2) == 3
+    try:
+        calc.divide(1, 0)
+    except ValueError as e:
+        assert str(e) == "Cannot divide by zero."
+    
+    # Test caesarCipher
+    assert caesarCipher("xyz", 3) == "abc"
+    assert caesarCipher("HeLLo", 3) == "KhOOr"
+    assert caesarCipher("Hello, World!", 3) == "Khoor, Zruog!"
+    assert caesarCipher("abcXYZ", 3) == "defABC"
+    
+    # Test analyzeArray
+    result = analyzeArray([1, 8, 3, 4, 2, 6])
+    assert result == {'average': 4.0, 'min': 1, 'max': 8, 'length': 6}
+    assert analyzeArray([]) == {'average': 0, 'min': None, 'max': None, 'length': 0}
+
+    print("All tests passed!")
+
+run_tests()
